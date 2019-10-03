@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Velo72</string>
+    <string name="bikeparking_entity">BIKE_PARKING</string>
+    <string name="bikeshop_entity">BIKE_SHOP</string>
 </resources>

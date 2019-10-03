@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BikewayModel {
+
     List<PathPointModel> pathPoints;
 
     public List<PathPointModel> getPathPoints() {
@@ -16,11 +17,10 @@ public class BikewayModel {
         this.pathPoints = pathPoints;
     }
 
-    public List<LatLng> getCoordinates()
-    {
+    public List<LatLng> getCoordinates() {
         List<LatLng> points = new ArrayList<>();
-        for (PathPointModel point: pathPoints
-             ) {
+        for (PathPointModel point : pathPoints
+        ) {
             points.add(point.getCoordinates());
         }
         return points;

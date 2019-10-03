@@ -4,10 +4,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class BikeShopModel extends LocationModel {
 
+    private long id;
     private String name;
     private String description;
     private String phone;
     private String url;
+
+    public long getId() { return id; }
 
     public String getName() {
         return name;
@@ -25,8 +28,9 @@ public class BikeShopModel extends LocationModel {
         return url;
     }
 
-    public BikeShopModel(LatLng coordinates, String name, String description, String phone, String url) {
+    public BikeShopModel(long id, LatLng coordinates, String name, String description, String phone, String url) {
         super(coordinates);
+        this.id = id;
         this.name = name;
         this.description = description;
         this.phone = phone;
