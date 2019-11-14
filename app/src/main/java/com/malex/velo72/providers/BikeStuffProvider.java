@@ -15,6 +15,7 @@ import java.util.List;
 public class BikeStuffProvider {
 
     private MapPresenter mapPresenter;
+
     private List<BikeParkingModel> bikeParkings;
     private List<BikeShopModel> bikeShops;
     private List<BikewayModel> bikeWays;

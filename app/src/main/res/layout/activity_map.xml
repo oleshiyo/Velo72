@@ -17,14 +17,14 @@
     </LinearLayout>
 
 
-    <com.malex.velo72.custom_views.BottomSliderView.BottomSliderView
+    <com.malex.velo72.custom.views.BottomSliderView.BottomSliderView
         android:id="@+id/bottomSliderView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:gravity="center_horizontal"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
-        android:orientation="vertical">
-    </com.malex.velo72.custom_views.BottomSliderView.BottomSliderView>
+        android:orientation="vertical"
+        android:background="@drawable/main_menu_shape">
+    </com.malex.velo72.custom.views.BottomSliderView.BottomSliderView>
 
 </FrameLayout>

@@ -1,9 +1,8 @@
-package com.malex.velo72.custom_views.BottomSliderView;
+package com.malex.velo72.custom.views.BottomSliderView;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +15,7 @@ public class BikeParkingObject implements BottomSliderViewObject {
     private Context context;
     private LayoutInflater layoutInflater;
 
+
     public BikeParkingObject(Context context, BikeParkingModel bikeParking) {
         this.context = context;
         layoutInflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -24,8 +24,9 @@ public class BikeParkingObject implements BottomSliderViewObject {
 
     @Override
     public View getShortDescriptionView() {
+
         View bikeParkingLayout = layoutInflater.inflate(R.layout.short_description_view, null);
-        TextView tv1 = bikeParkingLayout.findViewById(R.id.text1);
+        TextView tv1 = bikeParkingLayout.findViewById(R.id.locationName);
         TextView tv2 = bikeParkingLayout.findViewById(R.id.text2);
         tv1.setText(bikeParking.getName());
         tv2.setText(String.valueOf(bikeParking.getSpacesNumber()));
@@ -35,10 +36,15 @@ public class BikeParkingObject implements BottomSliderViewObject {
     @Override
     public View getLongDescriptionView() {
         View bikeParkingLayout = layoutInflater.inflate(R.layout.short_description_view, null);
-        TextView tv1 = bikeParkingLayout.findViewById(R.id.text1);
+        TextView tv1 = bikeParkingLayout.findViewById(R.id.locationName);
         TextView tv2 = bikeParkingLayout.findViewById(R.id.text2);
         tv1.setText(bikeParking.getName());
         tv2.setText(String.valueOf(bikeParking.getSpacesNumber()));
         return bikeParkingLayout;
+    }
+
+    @Override
+    public int getViewHeight() {
+        return 0;
     }
 }

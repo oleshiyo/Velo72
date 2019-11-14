@@ -1,6 +1,5 @@
 package com.malex.velo72.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -12,10 +11,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.malex.velo72.R;
-import com.malex.velo72.custom_views.BottomSliderView.BikeParkingObject;
-import com.malex.velo72.custom_views.BottomSliderView.BikeShopObject;
-import com.malex.velo72.custom_views.BottomSliderView.BottomSliderView;
-import com.malex.velo72.custom_views.BottomSliderView.BottomSliderViewObject;
+import com.malex.velo72.custom.views.BottomSliderView.BikeParkingObject;
+import com.malex.velo72.custom.views.BottomSliderView.BottomSliderView;
+import com.malex.velo72.custom.views.BottomSliderView.MainMenuObject;
 import com.malex.velo72.models.BikeParkingModel;
 import com.malex.velo72.models.BikeShopModel;
 import com.malex.velo72.presenters.MapPresenter;
@@ -30,6 +28,8 @@ public class MapActivity extends MvpAppCompatActivity implements MapView, OnMapR
 
     private GoogleMap mMap;
     private BottomSliderView bottomSliderView;
+    private MainMenuObject mainMenuObject;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,8 @@ public class MapActivity extends MvpAppCompatActivity implements MapView, OnMapR
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         bottomSliderView = findViewById(R.id.bottomSliderView);
+        mainMenuObject = new MainMenuObject(MapActivity.this, getSupportFragmentManager(), bottomSliderView);
+
     }
 
     @Override
@@ -87,11 +89,17 @@ public class MapActivity extends MvpAppCompatActivity implements MapView, OnMapR
 
     @Override
     public void updateDescriptionView(BikeShopModel description) {
-        bottomSliderView.setBottomSliderViewObject(new BikeShopObject(MapActivity.this, description));
+        //bottomSliderView.setBottomSliderViewObject(new BikeShopObject(MapActivity.this, description), getWindowManager().getDefaultDisplay());
+        bottomSliderView.setBottomSliderViewObject(mainMenuObject, getWindowManager().getDefaultDisplay());
     }
 
     @Override
     public void updateDescriptionView(BikeParkingModel description) {
-        bottomSliderView.setBottomSliderViewObject(new BikeParkingObject(MapActivity.this, description));
+        bottomSliderView.setBottomSliderViewObject(new BikeParkingObject(MapActivity.this, description), getWindowManager().getDefaultDisplay());
+    }
+
+    public void showBikeHirePlaces()
+    {
+        int a = 1;
     }
 }

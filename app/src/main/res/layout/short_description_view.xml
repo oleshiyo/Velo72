@@ -5,12 +5,12 @@
     android:id="@+id/short_descr_view">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text1"
-        android:text="TEXT1"/>
+        android:id="@+id/locationName"
+        android:text="LocationName"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text2"
         android:text="TEXT2"/>

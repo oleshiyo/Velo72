@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29
@@ -10,6 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -24,11 +26,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation group: 'io.realm', name: 'realm-gradle-plugin', version: '6.0.0'
 
     implementation 'tech.schoolhelper:moxy-x:1.7.0'
     annotationProcessor 'tech.schoolhelper:moxy-x-compiler:1.7.0'
     implementation 'tech.schoolhelper:moxy-x-androidx:1.7.0'
     implementation 'tech.schoolhelper:moxy-x-material:1.7.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha01'
 
     api 'com.google.dagger:dagger-android:2.24'
     api 'com.google.dagger:dagger-android-support:2.24' // if you use the support libraries
