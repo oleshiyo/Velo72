@@ -9,13 +9,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <fragment android:id="@+id/map"
+
+        <fragment
+            android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MapActivity" />
     </LinearLayout>
+    <include android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        layout="@layout/search_bar"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bottom_menu_button"
+        style="@style/FabButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#3100C412"
+        android:elevation="4dp"
+        app:rippleColor="#32FFFFFF" />
 
     <com.malex.velo72.custom.views.BottomSliderView.BottomSliderView
         android:id="@+id/bottomSliderView"
@@ -24,7 +42,8 @@
         android:gravity="center_horizontal"
         android:layout_gravity="bottom"
         android:orientation="vertical"
-        android:background="@drawable/main_menu_shape">
+        android:background="@drawable/main_menu_shape"
+        android:elevation="8dp">
     </com.malex.velo72.custom.views.BottomSliderView.BottomSliderView>
 
 </FrameLayout>

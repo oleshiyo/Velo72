@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,31 +13,46 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import com.malex.velo72.Velo72Application;
+
 public class BottomSliderView extends LinearLayout {
 
     private int sliderHeight = 0;
-    private int minHeight = 0;
+    private int halfHeight = 0;
     private int maxHeight = 0;
+    private int screenHeight = 0;
+    private float screenDensity = 0;
     private float startY = 0;
     private FrameLayout.LayoutParams params;
-    private LinearLayout llShortDescription;
-    private LinearLayout llLongDescription;
+    private LinearLayout llContainer;
     private ValueAnimator animator;
 
     public BottomSliderView(Context context) {
         super(context);
+        setDisplayMetrics();
     }
 
     public BottomSliderView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setDisplayMetrics();
     }
 
     public BottomSliderView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setDisplayMetrics();
     }
 
     public BottomSliderView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        setDisplayMetrics();
+    }
+
+    private void setDisplayMetrics()
+    {
+        Velo72Application app = (Velo72Application)getContext().getApplicationContext();
+        screenHeight = app.getScreenHeight();
+        screenDensity = app.getScreenDensity();
+        halfHeight = screenHeight/2;
     }
 
     @Override
@@ -50,7 +66,9 @@ public class BottomSliderView extends LinearLayout {
                 startY = y;
                 break;
             case MotionEvent.ACTION_MOVE:
-                params.height = sliderHeight + (int) (startY - y);
+                int newHeight = sliderHeight + (int) (startY - y);
+                if (newHeight < maxHeight)
+                    params.height = newHeight;
                 this.setLayoutParams(params);
                 break;
             case MotionEvent.ACTION_UP:
@@ -63,62 +81,43 @@ public class BottomSliderView extends LinearLayout {
     private int calculateDescriptionHeight()
     {
         if (params.height > maxHeight) return maxHeight;
-        if (params.height < maxHeight & params.height > minHeight)
+        if (params.height < maxHeight & params.height > halfHeight)
         {
-            if (sliderHeight == maxHeight) return minHeight;
-            if (sliderHeight == minHeight) return maxHeight;
+            if (sliderHeight == maxHeight) return halfHeight;
+            if (sliderHeight == halfHeight) return maxHeight;
         }
         return 0;
     }
 
     private void mainViewsInitialize()
     {
-        if (llShortDescription != null) {
-            this.removeView(llShortDescription);
-            llShortDescription = null;
+        if (llContainer != null) {
+            this.removeView(llContainer);
+            llContainer = null;
         }
-            llShortDescription = new LinearLayout(this.getContext());
-            llShortDescription.setLayoutParams(new LinearLayout.LayoutParams(
+        llContainer = new LinearLayout(this.getContext());
+        llContainer.setLayoutParams(new LinearLayout.LayoutParams(
                     LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT));
 
-        if (llLongDescription != null) {
-            this.removeView(llLongDescription);
-            llLongDescription = null;
-        }
-            llLongDescription = new LinearLayout(this.getContext());
-            llLongDescription.setLayoutParams(new LinearLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT));
         params = (FrameLayout.LayoutParams) this.getLayoutParams();
     }
 
-    public void setBottomSliderViewObject(BottomSliderViewObject object, final Display display)
+    public void setBottomSliderViewObject(BottomSliderViewObject object)
     {
         mainViewsInitialize();
 
-        View shortDesc = object.getShortDescriptionView();
-        if (shortDesc != null)
+        View view = object.getView();
+        if (view != null)
         {
-            llShortDescription.addView(object.getShortDescriptionView());
-            this.addView(llShortDescription);
-        }
-
-        View longDesc = object.getLongDescriptionView();
-        if (longDesc != null)
-        {
-            llLongDescription.addView(object.getLongDescriptionView());
-            this.addView(llLongDescription);
+            llContainer.addView(object.getView());
+            this.addView(llContainer);
         }
 
         invalidate();
-        llShortDescription.measure(0, 0);
-        llLongDescription.measure(0, 0);
 
-        minHeight = llShortDescription.getMeasuredHeight();
-        if (minHeight < object.getViewHeight()) minHeight += object.getViewHeight();
-        maxHeight = minHeight + llLongDescription.getMeasuredHeight();
-        if (params.height == 0) executeAnimation(0, minHeight);
+        maxHeight = (int)(screenHeight - Math.ceil(25 * screenDensity));
+        if (params.height == 0) executeAnimation(0, halfHeight);
     }
 
     private void executeAnimation(int height1, int height2)

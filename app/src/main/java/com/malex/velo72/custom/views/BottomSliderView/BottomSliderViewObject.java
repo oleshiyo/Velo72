@@ -4,7 +4,5 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 public interface BottomSliderViewObject {
-    View getShortDescriptionView();
-    View getLongDescriptionView();
-    int getViewHeight();
+    View getView();
 }

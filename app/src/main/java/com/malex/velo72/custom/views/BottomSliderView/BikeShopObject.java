@@ -22,27 +22,12 @@ public class BikeShopObject implements BottomSliderViewObject {
     }
 
     @Override
-    public View getShortDescriptionView() {
+    public View getView() {
         View bikeShopLayout = layoutInflater.inflate(R.layout.short_description_view, null);
         TextView tv1 = bikeShopLayout.findViewById(R.id.locationName);
         TextView tv2 = bikeShopLayout.findViewById(R.id.text2);
         tv1.setText(bikeShop.getName());
         tv2.setText(String.valueOf(bikeShop.getDescription()));
         return bikeShopLayout;
-    }
-
-    @Override
-    public View getLongDescriptionView() {
-        View bikeShopLayout = layoutInflater.inflate(R.layout.short_description_view, null);
-        TextView tv1 = bikeShopLayout.findViewById(R.id.locationName);
-        TextView tv2 = bikeShopLayout.findViewById(R.id.text2);
-        tv1.setText(bikeShop.getName());
-        tv2.setText(String.valueOf(bikeShop.getDescription()));
-        return bikeShopLayout;
-    }
-
-    @Override
-    public int getViewHeight() {
-        return 0;
     }
 }

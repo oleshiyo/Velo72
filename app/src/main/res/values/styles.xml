@@ -16,8 +16,6 @@
     <style name="TabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">#43CBA4</item>
         <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabPaddingStart">-8dp</item>
-        <item name="tabPaddingEnd">-8dp</item>
         <item name="tabTextAppearance">@style/TabItem</item>
         <item name="tabRippleColor">@null</item>
     </style>
@@ -25,6 +23,11 @@
     <style name="TabItem" parent="Widget.MaterialComponents.TabLayout">
         <item name="android:textSize">12dp</item>
         <item name="android:textColor">#4E5386</item>
+    </style>
+
+    <style name="FabButton" parent="Widget.Design.FloatingActionButton">
+        <item name="backgroundTint">#CC43CBA4</item>
+
     </style>
 
 </resources>

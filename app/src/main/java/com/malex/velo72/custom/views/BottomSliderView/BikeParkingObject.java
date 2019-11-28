@@ -23,7 +23,7 @@ public class BikeParkingObject implements BottomSliderViewObject {
     }
 
     @Override
-    public View getShortDescriptionView() {
+    public View getView() {
 
         View bikeParkingLayout = layoutInflater.inflate(R.layout.short_description_view, null);
         TextView tv1 = bikeParkingLayout.findViewById(R.id.locationName);
@@ -31,20 +31,5 @@ public class BikeParkingObject implements BottomSliderViewObject {
         tv1.setText(bikeParking.getName());
         tv2.setText(String.valueOf(bikeParking.getSpacesNumber()));
         return bikeParkingLayout;
-    }
-
-    @Override
-    public View getLongDescriptionView() {
-        View bikeParkingLayout = layoutInflater.inflate(R.layout.short_description_view, null);
-        TextView tv1 = bikeParkingLayout.findViewById(R.id.locationName);
-        TextView tv2 = bikeParkingLayout.findViewById(R.id.text2);
-        tv1.setText(bikeParking.getName());
-        tv2.setText(String.valueOf(bikeParking.getSpacesNumber()));
-        return bikeParkingLayout;
-    }
-
-    @Override
-    public int getViewHeight() {
-        return 0;
     }
 }

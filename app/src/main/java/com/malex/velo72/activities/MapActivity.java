@@ -1,17 +1,22 @@
 package com.malex.velo72.activities;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.malex.velo72.R;
 import com.malex.velo72.custom.views.BottomSliderView.BikeParkingObject;
+import com.malex.velo72.custom.views.BottomSliderView.BikeShopObject;
 import com.malex.velo72.custom.views.BottomSliderView.BottomSliderView;
 import com.malex.velo72.custom.views.BottomSliderView.MainMenuObject;
 import com.malex.velo72.models.BikeParkingModel;
@@ -29,6 +34,8 @@ public class MapActivity extends MvpAppCompatActivity implements MapView, OnMapR
     private GoogleMap mMap;
     private BottomSliderView bottomSliderView;
     private MainMenuObject mainMenuObject;
+    private FloatingActionButton btnMainBottomMenu;
+
 
 
     @Override
@@ -42,6 +49,13 @@ public class MapActivity extends MvpAppCompatActivity implements MapView, OnMapR
         bottomSliderView = findViewById(R.id.bottomSliderView);
         mainMenuObject = new MainMenuObject(MapActivity.this, getSupportFragmentManager(), bottomSliderView);
 
+        btnMainBottomMenu = findViewById(R.id.bottom_menu_button);
+        btnMainBottomMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMainBottomMenu();
+            }
+        });
     }
 
     @Override
@@ -55,6 +69,19 @@ public class MapActivity extends MvpAppCompatActivity implements MapView, OnMapR
                 return true;
             }
         });
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = mMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.style_json));
+
+            if (!success) {
+
+            }
+        } catch (Resources.NotFoundException e) {
+
+        }
 
         mapPresenter.loadBikeways();
         mapPresenter.loadBikeShops();
@@ -89,17 +116,22 @@ public class MapActivity extends MvpAppCompatActivity implements MapView, OnMapR
 
     @Override
     public void updateDescriptionView(BikeShopModel description) {
-        //bottomSliderView.setBottomSliderViewObject(new BikeShopObject(MapActivity.this, description), getWindowManager().getDefaultDisplay());
-        bottomSliderView.setBottomSliderViewObject(mainMenuObject, getWindowManager().getDefaultDisplay());
+        bottomSliderView.setBottomSliderViewObject(new BikeShopObject(MapActivity.this, description));
     }
 
     @Override
     public void updateDescriptionView(BikeParkingModel description) {
-        bottomSliderView.setBottomSliderViewObject(new BikeParkingObject(MapActivity.this, description), getWindowManager().getDefaultDisplay());
+        bottomSliderView.setBottomSliderViewObject(new BikeParkingObject(MapActivity.this, description));
     }
 
     public void showBikeHirePlaces()
     {
-        int a = 1;
+        mainMenuObject.setFragments(2);
+        bottomSliderView.setBottomSliderViewObject(mainMenuObject);
+    }
+
+    public void showMainBottomMenu() {
+        mainMenuObject.setFragments(1);
+        bottomSliderView.setBottomSliderViewObject(mainMenuObject);
     }
 }

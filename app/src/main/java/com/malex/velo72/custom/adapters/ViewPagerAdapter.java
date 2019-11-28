@@ -4,46 +4,68 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final List<Fragment> fragments = new ArrayList<>();
-    private final List<String> fragmentsTitles = new ArrayList<>();
+    private FragmentManager mFragmentManager;
+    private ArrayList<PagerItem> mPagerItems;
 
     public ViewPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
+        mFragmentManager = fm;
+        mPagerItems = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return mPagerItems.get(position).getFragment();
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return mPagerItems.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return fragmentsTitles.get(position);
+        return mPagerItems.get(position).getTitle();
     }
 
-    public void addFragment(Fragment fragment, String title)
-    {
-        fragments.add(fragment);
-        fragmentsTitles.add(title);
+    @Override
+    public int getItemPosition(Object object){
+        return PagerAdapter.POSITION_NONE;
     }
 
-    public void removeAllFragments()
-    {
-        fragments.clear();
-        fragmentsTitles.clear();
+    public void hidePagerItems() {
+        if (mPagerItems != null)
+            for (int i = 0; i < mPagerItems.size(); i++) {
+                mFragmentManager.beginTransaction().hide(mPagerItems.get(i).getFragment()).commit();
+            }
+    }
+
+    public void showPagerItems(ArrayList<PagerItem> pagerItems) {
+        mPagerItems = pagerItems;
+        if (mPagerItems != null)
+            for (int i = 0; i < mPagerItems.size(); i++) {
+                if (mPagerItems.get(i).getFragment().isHidden())
+                    mFragmentManager.beginTransaction().show(mPagerItems.get(i).getFragment()).commit();
+            }
+    }
+
+    public void removePagerItems() {
+        if (mPagerItems != null)
+            for (int i = 0; i < mPagerItems.size(); i++) {
+                mFragmentManager.beginTransaction().remove(mPagerItems.get(i).getFragment()).commit();
+            }
+    }
+
+    public void setPagerItems(ArrayList<PagerItem> pagerItems) {
+        mPagerItems = pagerItems;
     }
 }
